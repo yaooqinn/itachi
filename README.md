@@ -30,6 +30,7 @@ config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.exte
 - editdistance
 - from_base
 - index
+- infinity
 - try
 - to_base
 

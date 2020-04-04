@@ -19,10 +19,10 @@ package org.apache.spark.sql.catalyst.expressions.postgresql
 
 import java.util.regex.Pattern
 
-import org.apache.spark.sql.catalyst.util.GenericArrayData
 import org.apache.spark.sql.catalyst.{FunctionIdentifier, InternalRow}
 import org.apache.spark.sql.catalyst.expressions.{ExpectsInputTypes, Expression, ExpressionDescription, ExpressionInfo, Literal, TernaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.CodegenFallback
+import org.apache.spark.sql.catalyst.util.GenericArrayData
 import org.apache.spark.sql.extra.FunctionDescription
 import org.apache.spark.sql.types.{AbstractDataType, ArrayType, DataType, StringType}
 import org.apache.spark.unsafe.types.UTF8String

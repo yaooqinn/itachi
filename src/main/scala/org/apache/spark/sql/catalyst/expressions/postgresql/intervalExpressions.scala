@@ -19,11 +19,10 @@ package org.apache.spark.sql.catalyst.expressions.postgresql
 
 import scala.util.control.NonFatal
 
+import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.expressions.{ExpectsInputTypes, Expression, ExpressionDescription, ExpressionInfo, UnaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, ExprCode}
 import org.apache.spark.sql.catalyst.expressions.postgresql.PostgreSQLIntervalUtils._
-import org.apache.spark.sql.catalyst.expressions.teradata.Char2HexInt
-import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.extra.FunctionDescription
 import org.apache.spark.sql.types.{AbstractDataType, CalendarIntervalType, DataType}
 import org.apache.spark.unsafe.types.CalendarInterval

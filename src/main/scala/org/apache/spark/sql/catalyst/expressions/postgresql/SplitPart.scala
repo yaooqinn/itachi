@@ -19,9 +19,9 @@ package org.apache.spark.sql.catalyst.expressions.postgresql
 
 import java.util.regex.Pattern
 
+import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionDescription, ExpressionInfo, ImplicitCastInputTypes, TernaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.CodegenFallback
-import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.extra.FunctionDescription
 import org.apache.spark.sql.types.{AbstractDataType, DataType, IntegerType, StringType}
 import org.apache.spark.unsafe.types.UTF8String

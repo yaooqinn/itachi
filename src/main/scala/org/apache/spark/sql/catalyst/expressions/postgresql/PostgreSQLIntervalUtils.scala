@@ -17,8 +17,8 @@
 
 package org.apache.spark.sql.catalyst.expressions.postgresql
 
-import org.apache.spark.unsafe.types.CalendarInterval
 import org.apache.spark.sql.catalyst.util.DateTimeConstants._
+import org.apache.spark.unsafe.types.CalendarInterval
 
 object PostgreSQLIntervalUtils {
 

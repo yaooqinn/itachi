@@ -15,21 +15,18 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql.extra
+package org.apache.spark.sql.catalyst.expressions.teradata
 
-import org.apache.spark.sql.SparkSessionExtensions
-import org.apache.spark.sql.catalyst.expressions.teradata.{Char2HexInt, CosineSimilarity, Infinity, Try}
+import org.apache.spark.sql.catalyst.FunctionIdentifier
+import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionInfo, LeafMathExpression}
+import org.apache.spark.sql.extra.FunctionDescription
 
-class TeradataExtensions extends Extensions {
-  override def apply(extensions: SparkSessionExtensions): Unit = {
-    extensions.injectFunction(Char2HexInt.fd)
-    extensions.injectFunction(CosineSimilarity.fd)
-    extensions.injectFunction(FunctionAliases.editDistance)
-    extensions.injectFunction(FunctionAliases.from_base)
-    extensions.injectFunction(FunctionAliases.index)
-    extensions.injectFunction(FunctionAliases.to_base)
-    extensions.injectFunction(Infinity.fd)
-    extensions.injectFunction(Try.fd)
-  }
+case class Infinity() extends LeafMathExpression(Double.PositiveInfinity, "infinity")
+
+object Infinity {
+  val fd: FunctionDescription = (
+    new FunctionIdentifier("infinity"),
+    new ExpressionInfo(classOf[Infinity].getCanonicalName, "infinity"),
+    (_: Seq[Expression]) => Infinity())
+
 }
-

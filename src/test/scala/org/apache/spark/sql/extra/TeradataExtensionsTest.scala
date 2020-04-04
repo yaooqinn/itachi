@@ -21,17 +21,13 @@ import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 import org.apache.spark.sql.{AnalysisException, DataFrame, Row}
 import org.apache.spark.sql.hive.test.TestHive
+import org.apache.spark.sql.test.SharedSparkSession
 
-class TeradataExtensionsTest extends FunSuite with BeforeAndAfterAll {
-
-  private val spark = TestHive.sparkSession
+class TeradataExtensionsTest extends SharedSparkSession {
 
   override def beforeAll(): Unit = {
+    super.beforeAll()
     new TeradataExtensions().apply(spark.extensions)
-  }
-
-  override def afterAll(): Unit = {
-    spark.reset()
   }
 
   def checkResult(df: DataFrame, expect: DataFrame): Unit = {
@@ -103,5 +99,10 @@ class TeradataExtensionsTest extends FunSuite with BeforeAndAfterAll {
   test("to_base") {
     val frame = spark.sql("SELECT to_base('10', 2)")
     checkAnswer(frame, Seq(Row("1010")))
+  }
+
+  test("infinity") {
+    val frame = spark.sql("SELECT infinity()")
+    checkAnswer(frame, Seq(Row(Double.PositiveInfinity)))
   }
 }

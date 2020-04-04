@@ -21,22 +21,15 @@ import org.scalatest.{BeforeAndAfterAll, FunSuite}
 
 import org.apache.spark.sql.{DataFrame, Row}
 import org.apache.spark.sql.hive.test.TestHive
+import org.apache.spark.sql.test.SharedSparkSession
 
-class PostgreSQLExtensionsTest extends FunSuite with BeforeAndAfterAll{
-
-  private val spark = TestHive.sparkSession
-
-  var sql = spark.sql _
-
-  import spark.implicits._
+class PostgreSQLExtensionsTest extends SharedSparkSession {
 
   override def beforeAll(): Unit = {
+    super.beforeAll()
     new PostgreSQLExtensions().apply(spark.extensions)
   }
 
-  override def afterAll(): Unit = {
-    spark.reset()
-  }
 
   def checkResult(df: DataFrame, expect: DataFrame): Unit = {
     assert(df.collect() === expect.collect())
@@ -47,6 +40,8 @@ class PostgreSQLExtensionsTest extends FunSuite with BeforeAndAfterAll{
   }
 
   test("array_append") {
+    val sql = spark.sql _
+    new PostgreSQLExtensions().apply(spark.extensions)
     checkResult(sql("select array_append(array(1,2), 3)"), sql("select array(1, 2, 3)"))
     checkResult(sql("select array_append(array(1,2), null)"), sql("select array(1, 2, null)"))
     checkResult(sql("select array_append(array('3', '2'), '3')"),
@@ -56,6 +51,8 @@ class PostgreSQLExtensionsTest extends FunSuite with BeforeAndAfterAll{
   }
 
   test("sting split_part") {
+    val s = spark
+    import s.implicits._
     val df = Seq("abc~@~def~@~ghi").toDF("a")
     checkAnswer(df.selectExpr("split_part(a, '~@~', 2)"), Seq(Row("def")))
     checkAnswer(df.selectExpr("split_part(a, '~@~', -1)"), Seq(Row(null)))
@@ -71,6 +68,8 @@ class PostgreSQLExtensionsTest extends FunSuite with BeforeAndAfterAll{
   }
 
   test("string_to_array function") {
+    val s = spark
+    import s.implicits._
     val df1 = Seq("xx~^~yy~^~zz~^~").toDF("a")
 
     checkAnswer(
