@@ -17,9 +17,9 @@
 
 package org.apache.spark.sql
 
+import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.analysis.FunctionRegistry.FunctionBuilder
 import org.apache.spark.sql.catalyst.expressions.ExpressionInfo
-import org.apache.spark.sql.catalyst.FunctionIdentifier
 
 package object extra {
 

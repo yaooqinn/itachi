@@ -29,7 +29,6 @@ class TeradataExtensions extends Extensions {
     extensions.injectFunction(FunctionAliases.index)
     extensions.injectFunction(FunctionAliases.to_base)
     extensions.injectFunction(Try.fd)
-
   }
 }
 

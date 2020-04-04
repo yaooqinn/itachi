@@ -22,8 +22,6 @@ import org.apache.spark.sql.catalyst.expressions.{Conv, Expression, ExpressionIn
 
 object FunctionAliases {
 
-  val aliases: Seq[FunctionDescription] = Seq(editDistance)
-
   /**
    * Returns the minimum number of edit operations
    * (insertions, deletions, substitutions and transpositions) required to
