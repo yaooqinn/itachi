@@ -124,4 +124,11 @@ class TeradataExtensionsTest extends SharedSparkSession {
     val frame4 = spark.sql("SELECT is_finite(null)")
     checkAnswer(frame4, Seq(Row(true)))
   }
+
+  test("nan") {
+    val frame = spark.sql("SELECT nan()")
+    checkAnswer(frame, Seq(Row(Double.NaN)))
+    val frame2 = spark.sql("SELECT -nan()")
+    checkAnswer(frame2, Seq(Row(Double.NaN)))
+  }
 }

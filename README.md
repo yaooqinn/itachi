@@ -33,6 +33,7 @@ config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.exte
 - infinity
 - is_finite
 - is_infinite
+- NaN
 - try
 - to_base
 

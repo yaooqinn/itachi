@@ -18,7 +18,7 @@
 package org.apache.spark.sql.extra
 
 import org.apache.spark.sql.SparkSessionExtensions
-import org.apache.spark.sql.catalyst.expressions.teradata.{Char2HexInt, CosineSimilarity, Infinity, IsFinite, IsInfinite, Try}
+import org.apache.spark.sql.catalyst.expressions.teradata.{Char2HexInt, CosineSimilarity, Infinity, IsFinite, IsInfinite, NaN, Try}
 
 class TeradataExtensions extends Extensions {
   override def apply(extensions: SparkSessionExtensions): Unit = {
@@ -31,6 +31,7 @@ class TeradataExtensions extends Extensions {
     extensions.injectFunction(Infinity.fd)
     extensions.injectFunction(IsFinite.fd)
     extensions.injectFunction(IsInfinite.fd)
+    extensions.injectFunction(NaN.fd)
     extensions.injectFunction(Try.fd)
   }
 }
