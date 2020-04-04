@@ -17,10 +17,7 @@
 
 package org.apache.spark.sql.extra
 
-import org.scalatest.{BeforeAndAfterAll, FunSuite}
-
 import org.apache.spark.sql.{DataFrame, Row}
-import org.apache.spark.sql.hive.test.TestHive
 import org.apache.spark.sql.test.SharedSparkSession
 
 class PostgreSQLExtensionsTest extends SharedSparkSession {

@@ -17,10 +17,7 @@
 
 package org.apache.spark.sql.extra
 
-import org.scalatest.{BeforeAndAfterAll, FunSuite}
-
 import org.apache.spark.sql.{AnalysisException, DataFrame, Row}
-import org.apache.spark.sql.hive.test.TestHive
 import org.apache.spark.sql.test.SharedSparkSession
 
 class TeradataExtensionsTest extends SharedSparkSession {
@@ -104,5 +101,16 @@ class TeradataExtensionsTest extends SharedSparkSession {
   test("infinity") {
     val frame = spark.sql("SELECT infinity()")
     checkAnswer(frame, Seq(Row(Double.PositiveInfinity)))
+    val frame2 = spark.sql("SELECT -infinity()")
+    checkAnswer(frame2, Seq(Row(Double.NegativeInfinity)))
+  }
+
+  test("is_infinite") {
+    val frame = spark.sql("SELECT is_infinite(1)")
+    checkAnswer(frame, Seq(Row(false)))
+    val frame2 = spark.sql("SELECT is_infinite(infinity())")
+    checkAnswer(frame2, Seq(Row(true)))
+    val frame3 = spark.sql("SELECT is_infinite(-infinity())")
+    checkAnswer(frame3, Seq(Row(true)))
   }
 }
