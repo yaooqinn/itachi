@@ -113,4 +113,15 @@ class TeradataExtensionsTest extends SharedSparkSession {
     val frame3 = spark.sql("SELECT is_infinite(-infinity())")
     checkAnswer(frame3, Seq(Row(true)))
   }
+
+  test("is_finite") {
+    val frame = spark.sql("SELECT is_finite(1)")
+    checkAnswer(frame, Seq(Row(true)))
+    val frame2 = spark.sql("SELECT is_finite(infinity())")
+    checkAnswer(frame2, Seq(Row(false)))
+    val frame3 = spark.sql("SELECT is_finite(-infinity())")
+    checkAnswer(frame3, Seq(Row(false)))
+    val frame4 = spark.sql("SELECT is_finite(null)")
+    checkAnswer(frame4, Seq(Row(true)))
+  }
 }

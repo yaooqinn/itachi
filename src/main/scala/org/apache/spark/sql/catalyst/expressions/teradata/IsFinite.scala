@@ -24,7 +24,7 @@ import org.apache.spark.sql.catalyst.expressions.codegen.Block._
 import org.apache.spark.sql.extra.FunctionDescription
 import org.apache.spark.sql.types.{AbstractDataType, DoubleType, FloatType, TypeCollection}
 
-case class IsInfinite(child: Expression) extends UnaryExpression
+case class IsFinite(child: Expression) extends UnaryExpression
   with Predicate with ImplicitCastInputTypes {
   override def nullable: Boolean = false
 
@@ -33,34 +33,35 @@ case class IsInfinite(child: Expression) extends UnaryExpression
   override def eval(input: InternalRow): Any = {
     val value = child.eval(input)
     if (value == null) {
-      false
+      true
     } else {
       child.dataType match {
-        case FloatType => value.asInstanceOf[Float].isInfinite
-        case DoubleType => value.asInstanceOf[Double].isInfinite
+        case FloatType => java.lang.Float.isFinite(value.asInstanceOf[Float])
+        case DoubleType => java.lang.Double.isFinite(value.asInstanceOf[Double])
       }
     }
   }
   override def doGenCode(ctx: CodegenContext, ev: ExprCode): ExprCode = {
     val eval = child.genCode(ctx)
-    val isInfinite = child.dataType match {
-      case FloatType => s"java.lang.Float.isInfinite(${eval.value})"
-      case DoubleType => s"java.lang.Double.isInfinite(${eval.value})"
+    val isFinite = child.dataType match {
+      case FloatType => s"java.lang.Float.isFinite(${eval.value})"
+      case DoubleType => s"java.lang.Double.isFinite(${eval.value})"
     }
     ev.copy(code =
       code"""
             |${eval.code}
             |boolean ${ev.value} = false;
-            |${ev.value} = !${eval.isNull} && $isInfinite;
+            |${ev.value} = ${eval.isNull} || $isFinite;
             |""".stripMargin, isNull = FalseLiteral)
   }
 
   override def prettyName: String = "is_infinite"
 }
 
-object IsInfinite {
+object IsFinite {
+
   val fd: FunctionDescription = (
-    new FunctionIdentifier("is_infinite"),
-    new ExpressionInfo(classOf[IsInfinite].getCanonicalName, "is_infinite"),
-    (children: Seq[Expression]) => IsInfinite(children.head))
+    new FunctionIdentifier("is_finite"),
+    new ExpressionInfo(classOf[IsFinite].getCanonicalName, "is_finite"),
+    (children: Seq[Expression]) => IsFinite(children.head))
 }

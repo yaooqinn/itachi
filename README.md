@@ -31,6 +31,7 @@ config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.exte
 - from_base
 - index
 - infinity
+- is_finite
 - is_infinite
 - try
 - to_base
