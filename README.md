@@ -23,7 +23,7 @@ config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.exte
 - org.apache.spark.sql.extra.PostgreSQLExtensions
 - org.apache.spark.sql.extra.TeradataExtensions
 
-## Functions from Teradata
+## Functions from Teradata/Presto
 
 - char2HexInt
 - cosine_similarity
