@@ -24,7 +24,7 @@ import org.apache.spark.sql.hive.test.TestHive
 
 class TeradataExtensionsTest extends FunSuite with BeforeAndAfterAll {
 
-  private val spark = TestHive.sparkSession.newSession()
+  private val spark = TestHive.sparkSession
 
   override def beforeAll(): Unit = {
     new TeradataExtensions().apply(spark.extensions)
@@ -83,11 +83,11 @@ class TeradataExtensionsTest extends FunSuite with BeforeAndAfterAll {
     val res2 =
       spark.sql("select try(assert_true(3 < b)) from values (1, 2), (2, 3), (4, 5) t(a, b)")
     assert(res2.head().isNullAt(0))
-    //scalastyle:off
-    res2.queryExecution.debug.codegen()
-    spark.sql("create table abcde as select cast(a as string), b from values (interval 1 day , 2)," +
-      " (interval 2 day, 3), (interval 6 month, 0) t(a, b)")
-    assert(spark.sql("select try(cast(a as interval) / b) from abcde where b = 0").head().isNullAt(0))
+    spark.sql(
+      "create table abcde as select cast(a as string), b from values (interval 1 day , 2)," +
+        " (interval 2 day, 3), (interval 6 month, 0) t(a, b)")
+    assert(spark.sql("select try(cast(a as interval) / b) from abcde where b = 0")
+      .head().isNullAt(0))
   }
 
   test("cosine_similarity") {
