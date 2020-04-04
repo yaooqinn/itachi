@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <settings default="spark">
+    <module2copyright>
+      <element module="All" copyright="spark" />
+    </module2copyright>
+  </settings>
+</component>

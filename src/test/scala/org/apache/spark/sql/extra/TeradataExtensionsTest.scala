@@ -17,8 +17,10 @@
 
 package org.apache.spark.sql.extra
 
-import org.apache.spark.sql.hive.test.TestHive
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
+
+import org.apache.spark.sql.{AnalysisException, DataFrame, Row}
+import org.apache.spark.sql.hive.test.TestHive
 
 class TeradataExtensionsTest extends FunSuite with BeforeAndAfterAll {
 
@@ -30,6 +32,14 @@ class TeradataExtensionsTest extends FunSuite with BeforeAndAfterAll {
 
   override def afterAll(): Unit = {
     spark.reset()
+  }
+
+  def checkResult(df: DataFrame, expect: DataFrame): Unit = {
+    assert(df.collect() === expect.collect())
+  }
+
+  def checkAnswer(df: DataFrame, expect: Seq[Row]): Unit = {
+    assert(df.collect() === expect)
   }
 
   test("char2hexint") {
@@ -60,4 +70,38 @@ class TeradataExtensionsTest extends FunSuite with BeforeAndAfterAll {
     assert(res2 === 4)
   }
 
+  test("try") {
+    val res0 = spark.sql("select try(date_part('year', timestamp '2020-04-01'))").head().getInt(0)
+    assert(res0 === 2020)
+    // TODO: handle child expression fail in analysis?
+    intercept[AnalysisException](spark.sql("select try(date_part('aha', timestamp '2020-04-01'))"))
+    spark.sql("set spark.sql.ansi.enabled=true")
+    intercept[RuntimeException](spark.sql("select assert_true(1<0)").collect())
+
+    val res1 = spark.sql("select try(assert_true(1<0))")
+    assert(res1.head().isNullAt(0))
+    val res2 =
+      spark.sql("select try(assert_true(3 < b)) from values (1, 2), (2, 3), (4, 5) t(a, b)")
+    assert(res2.head().isNullAt(0))
+    //scalastyle:off
+    res2.queryExecution.debug.codegen()
+    spark.sql("create table abcde as select cast(a as string), b from values (interval 1 day , 2)," +
+      " (interval 2 day, 3), (interval 6 month, 0) t(a, b)")
+    assert(spark.sql("select try(cast(a as interval) / b) from abcde where b = 0").head().isNullAt(0))
+  }
+
+  test("cosine_similarity") {
+    val frame = spark.sql("SELECT cosine_similarity(MAP('a', 1.0), MAP('a', 2.0))")
+    checkAnswer(frame, Seq(Row(1.0)))
+  }
+
+  test("from_base") {
+    val frame = spark.sql("SELECT from_base('10', 2)")
+    checkAnswer(frame, Seq(Row("2")))
+  }
+
+  test("to_base") {
+    val frame = spark.sql("SELECT to_base('10', 2)")
+    checkAnswer(frame, Seq(Row("1010")))
+  }
 }

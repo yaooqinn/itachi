@@ -17,17 +17,16 @@
 
 package org.apache.spark.sql.catalyst.expressions.teradata
 
-
+import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.expressions.{ExpectsInputTypes, Expression, ExpressionDescription, ExpressionInfo, UnaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, ExprCode}
-import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.extra.FunctionDescription
 import org.apache.spark.sql.types.{AbstractDataType, DataType, StringType}
 import org.apache.spark.unsafe.types.UTF8String
 
-
 @ExpressionDescription(
-  usage = "_FUNC_(expr) - Returns the hexadecimal representation of the UTF-16BE encoding of the string.",
+  usage = "_FUNC_(expr) - Returns the hexadecimal representation of the UTF-16BE encoding" +
+    " of the string.",
   examples = """
     Examples:
       > SELECT _FUNC_('Spark SQL');

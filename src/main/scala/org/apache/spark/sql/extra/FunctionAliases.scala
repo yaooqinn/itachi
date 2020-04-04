@@ -17,17 +17,20 @@
 
 package org.apache.spark.sql.extra
 
-import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionInfo, Levenshtein, Literal, StringLocate, ToUnixTimestamp}
 import org.apache.spark.sql.catalyst.FunctionIdentifier
+import org.apache.spark.sql.catalyst.expressions.{Conv, Expression, ExpressionInfo, Levenshtein, Literal, StringLocate}
 
 object FunctionAliases {
 
   val aliases: Seq[FunctionDescription] = Seq(editDistance)
 
   /**
-   * Returns the minimum number of edit operations (insertions, deletions, substitutions and transpositions) required to transform string1 into string2.
+   * Returns the minimum number of edit operations
+   * (insertions, deletions, substitutions and transpositions) required to
+   * transform string1 into string2.
    *
-   * @note only accepts two string arguments but not ci/cd/cs/ct for the relative cost of a edit operation.
+   * @note only accepts two string arguments but not ci/cd/cs/ct
+   *       for the relative cost of a edit operation.
    */
   val editDistance: FunctionDescription = {
     (new FunctionIdentifier("EDITDISTANCE"),
@@ -45,5 +48,15 @@ object FunctionAliases {
       new ExpressionInfo(classOf[StringLocate].getCanonicalName, "index"),
       (children: Seq[Expression]) => StringLocate(children(1), children.head, Literal(1)))
   }
+
+  val from_base: FunctionDescription = (
+    new FunctionIdentifier("from_base"),
+    new ExpressionInfo(classOf[Conv].getCanonicalName, "from_base"),
+    (children: Seq[Expression]) => Conv(children.head, children.last, Literal(10)))
+
+  val to_base: FunctionDescription = (
+    new FunctionIdentifier("to_base"),
+    new ExpressionInfo(classOf[Conv].getCanonicalName, "to_base"),
+    (children: Seq[Expression]) => Conv(children.head, Literal(10), children.last))
 
 }

@@ -17,13 +17,14 @@
 
 package org.apache.spark.sql.extra
 
-import org.apache.spark.sql.hive.test.TestHive
-import org.apache.spark.sql.{DataFrame, Row}
 import org.scalatest.{BeforeAndAfterAll, FunSuite}
+
+import org.apache.spark.sql.{DataFrame, Row}
+import org.apache.spark.sql.hive.test.TestHive
 
 class PostgreSQLExtensionsTest extends FunSuite with BeforeAndAfterAll{
 
-  private val spark = TestHive.sparkSession.newSession()
+  private val spark = TestHive.sparkSession
 
   var sql = spark.sql _
 
@@ -31,7 +32,6 @@ class PostgreSQLExtensionsTest extends FunSuite with BeforeAndAfterAll{
 
   override def beforeAll(): Unit = {
     new PostgreSQLExtensions().apply(spark.extensions)
-    sql = spark.sql _
   }
 
   override def afterAll(): Unit = {
@@ -44,13 +44,13 @@ class PostgreSQLExtensionsTest extends FunSuite with BeforeAndAfterAll{
 
   def checkAnswer(df: DataFrame, expect: Seq[Row]): Unit = {
     assert(df.collect() === expect)
-
   }
 
   test("array_append") {
     checkResult(sql("select array_append(array(1,2), 3)"), sql("select array(1, 2, 3)"))
     checkResult(sql("select array_append(array(1,2), null)"), sql("select array(1, 2, null)"))
-    checkResult(sql("select array_append(array('3', '2'), '3')"), sql("select array('3', '2', '3')"))
+    checkResult(sql("select array_append(array('3', '2'), '3')"),
+      sql("select array('3', '2', '3')"))
     checkResult(sql("select array_append(array(null), null)"), sql("select array(null, null)"))
     checkResult(sql("select array_append(null, 3)"), sql("select array(3)"))
   }

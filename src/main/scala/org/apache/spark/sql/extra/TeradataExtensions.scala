@@ -18,13 +18,18 @@
 package org.apache.spark.sql.extra
 
 import org.apache.spark.sql.SparkSessionExtensions
-import org.apache.spark.sql.catalyst.expressions.teradata.Char2HexInt
+import org.apache.spark.sql.catalyst.expressions.teradata.{Char2HexInt, CosineSimilarity, Try}
 
 class TeradataExtensions extends Extensions {
   override def apply(extensions: SparkSessionExtensions): Unit = {
     extensions.injectFunction(Char2HexInt.fd)
+    extensions.injectFunction(CosineSimilarity.fd)
     extensions.injectFunction(FunctionAliases.editDistance)
+    extensions.injectFunction(FunctionAliases.from_base)
     extensions.injectFunction(FunctionAliases.index)
+    extensions.injectFunction(FunctionAliases.to_base)
+    extensions.injectFunction(Try.fd)
+
   }
 }
 

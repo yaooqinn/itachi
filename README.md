@@ -2,7 +2,7 @@
 
 A library that brings excellent and useful functions from various modern database management systems to Apache Spark, maybe few now:).
 
-Functions are classified to different extensions by where they came from, e.g. PostgreSQL.
+Functions are roughly classified to different extensions by where they came from, e.g. PostgreSQL.
 
 In general, only those functions that difficult for the Apache Spark Community to maintain in the master branch will be involved here.
 
@@ -23,12 +23,16 @@ config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.exte
 - org.apache.spark.sql.extra.PostgreSQLExtensions
 - org.apache.spark.sql.extra.TeradataExtensions
 
-
 ## Functions from Teradata
 
-- Char2HexInt
+- char2HexInt
+- cosine_similarity
 - editdistance
+- from_base
 - index
+- try
+- to_base
+
 
 ## Functions from PostgreSQL
 
