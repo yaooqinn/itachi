@@ -42,6 +42,7 @@ config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.exte
 
 - array_append
 - array_cat
+- array_length
 - justifyDays
 - justifyHours
 - justifyInterval
