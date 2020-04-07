@@ -53,6 +53,19 @@ class PostgreSQLExtensionsTest extends QueryTest with SharedSparkSession {
       sql("select array('3', '2', '3')"))
   }
 
+  test("array_length") {
+    val sql = spark.sql _
+    checkResult(sql("select array_length(array(1,2), 0)"), sql("select null"))
+    checkResult(sql("select array_length(array(1,2), null)"), sql("select null"))
+    checkResult(sql("select array_length(array('3', '2'), 1)"), sql("select 2"))
+    checkResult(sql("select array_length(array('3', '2'), 2)"), sql("select null"))
+    checkResult(sql("select array_length(array(array(1, 2, 3), array(3, 4, 5)), 2)"),
+      sql("select 3"))
+
+    checkResult(sql("select array_append(array(null), null)"), sql("select array(null, null)"))
+    checkResult(sql("select array_append(null, 3)"), sql("select array(3)"))
+  }
+
   test("sting split_part") {
     val s = spark
     import s.implicits._

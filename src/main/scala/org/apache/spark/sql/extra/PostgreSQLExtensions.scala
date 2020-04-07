@@ -18,11 +18,12 @@
 package org.apache.spark.sql.extra
 
 import org.apache.spark.sql.SparkSessionExtensions
-import org.apache.spark.sql.catalyst.expressions.postgresql.{ArrayAppend, IntervalJustifyLike, Scale, SplitPart, StringToArray, UnNest}
+import org.apache.spark.sql.catalyst.expressions.postgresql.{ArrayAppend, ArrayLength, IntervalJustifyLike, Scale, SplitPart, StringToArray, UnNest}
 
 class PostgreSQLExtensions extends Extensions {
   override def apply(ext: SparkSessionExtensions): Unit = {
     ext.injectFunction(ArrayAppend.fd)
+    ext.injectFunction(ArrayLength.fd)
     ext.injectFunction(FunctionAliases.array_cat)
     ext.injectFunction(IntervalJustifyLike.justifyDays)
     ext.injectFunction(IntervalJustifyLike.justifyHours)
