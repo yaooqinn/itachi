@@ -45,6 +45,7 @@ config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.exte
 - justifyDays
 - justifyHours
 - justifyInterval
+- scale
 - split_part
 - string_to_array
 - unnest

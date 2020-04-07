@@ -15,21 +15,13 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql.extra
+package org.apache.spark.sql.catalyst.expressions.postgresql
 
-import org.apache.spark.sql.SparkSessionExtensions
-import org.apache.spark.sql.catalyst.expressions.postgresql.{ArrayAppend, IntervalJustifyLike, Scale, SplitPart, StringToArray, UnNest}
+import org.scalatest.FunSuite
 
-class PostgreSQLExtensions extends Extensions {
-  override def apply(ext: SparkSessionExtensions): Unit = {
-    ext.injectFunction(ArrayAppend.fd)
-    ext.injectFunction(FunctionAliases.array_cat)
-    ext.injectFunction(IntervalJustifyLike.justifyDays)
-    ext.injectFunction(IntervalJustifyLike.justifyHours)
-    ext.injectFunction(IntervalJustifyLike.justifyInterval)
-    ext.injectFunction(Scale.fd)
-    ext.injectFunction(SplitPart.fd)
-    ext.injectFunction(StringToArray.fd)
-    ext.injectFunction(UnNest.fd)
-  }
-}
+import org.apache.spark.sql.catalyst.expressions.ExpressionEvalHelper
+
+//class ScaleTest extends FunSuite {
+//
+//  test("")
+//}

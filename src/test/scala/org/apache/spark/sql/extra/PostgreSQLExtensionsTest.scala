@@ -101,4 +101,14 @@ class PostgreSQLExtensionsTest extends QueryTest with SharedSparkSession {
     checkAnswer(df3.selectExpr("string_to_array(a, ',')"), Seq(Row(Seq(""))))
   }
 
+  test("scale") {
+    val s = spark
+    import s.implicits._
+
+    checkAnswer(
+      sql("select scale('1.1D')"),
+      Seq(Row(1))
+    )
+  }
+
 }
