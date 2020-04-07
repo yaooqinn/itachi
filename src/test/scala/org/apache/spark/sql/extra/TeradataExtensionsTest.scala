@@ -17,10 +17,10 @@
 
 package org.apache.spark.sql.extra
 
-import org.apache.spark.sql.{AnalysisException, DataFrame, Row}
+import org.apache.spark.sql.{AnalysisException, DataFrame, QueryTest, Row}
 import org.apache.spark.sql.test.SharedSparkSession
 
-class TeradataExtensionsTest extends SharedSparkSession {
+class TeradataExtensionsTest extends QueryTest with SharedSparkSession {
 
   override def beforeAll(): Unit = {
     super.beforeAll()
@@ -130,5 +130,12 @@ class TeradataExtensionsTest extends SharedSparkSession {
     checkAnswer(frame, Seq(Row(Double.NaN)))
     val frame2 = spark.sql("SELECT -nan()")
     checkAnswer(frame2, Seq(Row(Double.NaN)))
+  }
+
+  test("isnan") {
+    val frame = spark.sql("SELECT isnan(1)")
+    checkAnswer(frame, Seq(Row(false)))
+    val frame2 = spark.sql("SELECT isnan(nan() + 0)")
+    checkAnswer(frame2, Seq(Row(true)))
   }
 }

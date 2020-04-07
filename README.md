@@ -41,6 +41,7 @@ config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.exte
 ## Functions from PostgreSQL
 
 - array_append
+- array_cat
 - justifyDays
 - justifyHours
 - justifyInterval

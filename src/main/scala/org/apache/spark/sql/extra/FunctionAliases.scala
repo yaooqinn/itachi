@@ -18,7 +18,7 @@
 package org.apache.spark.sql.extra
 
 import org.apache.spark.sql.catalyst.FunctionIdentifier
-import org.apache.spark.sql.catalyst.expressions.{Conv, Expression, ExpressionInfo, Levenshtein, Literal, StringLocate}
+import org.apache.spark.sql.catalyst.expressions.{Concat, Conv, Expression, ExpressionInfo, Levenshtein, Literal, StringLocate}
 
 object FunctionAliases {
 
@@ -57,4 +57,9 @@ object FunctionAliases {
     new ExpressionInfo(classOf[Conv].getCanonicalName, "to_base"),
     (children: Seq[Expression]) => Conv(children.head, Literal(10), children.last))
 
+  // array_cat
+  val array_cat: FunctionDescription = (
+    new FunctionIdentifier("array_cat"),
+    new ExpressionInfo(classOf[Concat].getCanonicalName, "array_cat"),
+    (children: Seq[Expression]) => Concat(children))
 }

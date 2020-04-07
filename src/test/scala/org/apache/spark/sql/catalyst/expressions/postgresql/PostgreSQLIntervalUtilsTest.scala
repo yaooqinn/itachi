@@ -17,6 +17,8 @@
 
 package org.apache.spark.sql.catalyst.expressions.postgresql
 
+import scala.language.implicitConversions
+
 import org.scalatest.FunSuite
 
 import org.apache.spark.sql.catalyst.util.DateTimeConstants._

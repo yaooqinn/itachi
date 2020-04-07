@@ -17,16 +17,15 @@
 
 package org.apache.spark.sql.extra
 
-import org.apache.spark.sql.{DataFrame, Row}
+import org.apache.spark.sql.{DataFrame, QueryTest, Row}
 import org.apache.spark.sql.test.SharedSparkSession
 
-class PostgreSQLExtensionsTest extends SharedSparkSession {
+class PostgreSQLExtensionsTest extends QueryTest with SharedSparkSession {
 
   override def beforeAll(): Unit = {
     super.beforeAll()
     new PostgreSQLExtensions().apply(spark.extensions)
   }
-
 
   def checkResult(df: DataFrame, expect: DataFrame): Unit = {
     assert(df.collect() === expect.collect())
@@ -38,13 +37,20 @@ class PostgreSQLExtensionsTest extends SharedSparkSession {
 
   test("array_append") {
     val sql = spark.sql _
-    new PostgreSQLExtensions().apply(spark.extensions)
     checkResult(sql("select array_append(array(1,2), 3)"), sql("select array(1, 2, 3)"))
     checkResult(sql("select array_append(array(1,2), null)"), sql("select array(1, 2, null)"))
     checkResult(sql("select array_append(array('3', '2'), '3')"),
       sql("select array('3', '2', '3')"))
     checkResult(sql("select array_append(array(null), null)"), sql("select array(null, null)"))
     checkResult(sql("select array_append(null, 3)"), sql("select array(3)"))
+  }
+
+  test("array_cat") {
+    val sql = spark.sql _
+    checkResult(sql("select array_cat(array(1,2), array(1,3))"), sql("select array(1, 2, 1, 3)"))
+    checkResult(sql("select array_cat(array(1,2), array(null))"), sql("select array(1, 2, null)"))
+    checkResult(sql("select array_cat(array('3', '2'), array('3'))"),
+      sql("select array('3', '2', '3')"))
   }
 
   test("sting split_part") {
@@ -94,4 +100,5 @@ class PostgreSQLExtensionsTest extends SharedSparkSession {
     val df3 = Seq("").toDF("a")
     checkAnswer(df3.selectExpr("string_to_array(a, ',')"), Seq(Row(Seq(""))))
   }
+
 }
