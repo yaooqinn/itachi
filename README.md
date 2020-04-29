@@ -40,6 +40,7 @@ config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.exte
 
 ## Functions from PostgreSQL
 
+- age
 - array_append
 - array_cat
 - array_length

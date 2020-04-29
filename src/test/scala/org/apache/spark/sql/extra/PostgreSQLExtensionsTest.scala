@@ -19,6 +19,8 @@ package org.apache.spark.sql.extra
 
 import org.apache.spark.sql.{DataFrame, QueryTest, Row}
 import org.apache.spark.sql.test.SharedSparkSession
+import org.apache.spark.sql.types.Decimal
+import org.apache.spark.unsafe.types.CalendarInterval
 
 class PostgreSQLExtensionsTest extends QueryTest with SharedSparkSession {
 
@@ -115,8 +117,6 @@ class PostgreSQLExtensionsTest extends QueryTest with SharedSparkSession {
   }
 
   test("scale") {
-    val s = spark
-    import s.implicits._
 
     checkAnswer(
       sql("select scale('1.1D')"),
@@ -124,4 +124,29 @@ class PostgreSQLExtensionsTest extends QueryTest with SharedSparkSession {
     )
   }
 
+  test("age") {
+    checkAnswer(
+      sql("select age(timestamp '2001-04-10',  timestamp '1957-06-13')"),
+      Seq(Row(new CalendarInterval(525, 28, 0)))
+    )
+
+    checkAnswer(
+      sql(
+        """
+          |SELECT EXTRACT(YEAR FROM age) year_part,
+          |EXTRACT(MONTH FROM age) month_part,
+          |EXTRACT(DAY FROM age) day_part,
+          |EXTRACT(hour FROM age) hour_part,
+          |EXTRACT(minute FROM age) minute_part,
+          |EXTRACT(second FROM age) second_part
+          |FROM values (age(TIMESTAMP '2021-03-16 10:09:07', TIMESTAMP '2020-01-15 00:00:00')) AS t(age)
+          |""".stripMargin),
+        Seq(Row(1, 2, 1, 10, 9, Decimal(7000000, 8, 6).toJavaBigDecimal))
+    )
+
+    checkAnswer(
+      sql("select age(date 'today')"),
+      Seq(Row(new CalendarInterval(0, 0, 0)))
+    )
+  }
 }

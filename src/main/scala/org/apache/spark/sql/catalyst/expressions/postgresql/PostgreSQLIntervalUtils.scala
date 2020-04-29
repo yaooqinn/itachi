@@ -22,6 +22,7 @@ import org.apache.spark.unsafe.types.CalendarInterval
 
 object PostgreSQLIntervalUtils {
 
+  final val DAYS_PER_MONTH = 30
   /**
    * Adjust interval so 30-day time periods are represented as months.
    */
