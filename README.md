@@ -1,16 +1,18 @@
-# Spark SQL Function Extensions
+# itachi
 
-A library that brings excellent and useful functions from various modern database management systems to Apache Spark, maybe few now:).
+itachi brings useful functions from modern database management systems to Apache Spark :)
 
-Functions are roughly classified to different extensions by where they came from, e.g. PostgreSQL.
+For example, you can import the Postgres extensions and write Spark code that looks just like Postgres.
 
-In general, only those functions that difficult for the Apache Spark Community to maintain in the master branch will be involved here.
+The functions are implemented as native Spark functions, so they're performant.
+
+In general, only those functions that difficult for the Apache Spark Community to maintain in the master branch will be added to this library.
 
 ## Spark SQL Compliance
 
 This is a Spark SQL extension supplying add-on or aliased functions to the Apache Spark SQL builtin standard functions.
 
-If the functions added in this library is conflicts, the one in this library will take precedence of spark one.
+The functions in this library take precedence over the native Spark functions in the even of a name conflict.
 
 ## Prerequisites
 
