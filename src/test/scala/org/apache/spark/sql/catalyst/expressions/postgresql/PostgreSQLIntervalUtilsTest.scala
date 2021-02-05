@@ -19,13 +19,13 @@ package org.apache.spark.sql.catalyst.expressions.postgresql
 
 import scala.language.implicitConversions
 
-import org.scalatest.FunSuite
+import org.apache.itachi.ItachiFunSuite
 
 import org.apache.spark.sql.catalyst.util.DateTimeConstants._
 import org.apache.spark.sql.catalyst.util.IntervalUtils._
 import org.apache.spark.unsafe.types.{CalendarInterval, UTF8String}
 
-class PostgreSQLIntervalUtilsTest extends FunSuite {
+class PostgreSQLIntervalUtilsTest extends ItachiFunSuite {
 
   implicit def ss(s: String): UTF8String = UTF8String.fromString(s)
   test("justify days") {

@@ -17,12 +17,11 @@
 
 package org.apache.spark.sql.extra
 
-import org.apache.spark.sql.{DataFrame, QueryTest, Row}
-import org.apache.spark.sql.test.SharedSparkSession
+import org.apache.spark.sql.{DataFrame, Row}
 import org.apache.spark.sql.types.Decimal
 import org.apache.spark.unsafe.types.CalendarInterval
 
-class PostgreSQLExtensionsTest extends QueryTest with SharedSparkSession {
+class PostgreSQLExtensionsTest extends SparkSessionHelper {
 
   override def beforeAll(): Unit = {
     super.beforeAll()
@@ -119,14 +118,14 @@ class PostgreSQLExtensionsTest extends QueryTest with SharedSparkSession {
   test("scale") {
 
     checkAnswer(
-      sql("select scale('1.1D')"),
+      spark.sql("select scale('1.1D')"),
       Seq(Row(1))
     )
   }
 
   test("age") {
     checkAnswer(
-      sql("select age(timestamp '2001-04-10',  timestamp '1957-06-13')"),
+      spark.sql("select age(timestamp '2001-04-10',  timestamp '1957-06-13')"),
       Seq(Row(new CalendarInterval(525, 28, 0)))
     )
 

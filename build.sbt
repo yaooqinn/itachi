@@ -19,12 +19,17 @@ name := "itachi"
 
 version := "0.0.1"
 
-scalaVersion := "2.12.12"
+scalaVersion := "2.12.10"
 
-libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.1.0" % "provided"
-libraryDependencies += "org.apache.spark" %% "spark-core" % "3.1.0" % "provided"
-libraryDependencies += "org.apache.spark" %% "spark-catalyst" % "3.1.0" % "provided"
-libraryDependencies += "org.apache.spark" %% "spark-hive" % "3.1.0" % "provided"
+val sparkVersion = "3.1.0"
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.8" % "test"
-libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.14.2" % "test"
+libraryDependencies += "org.apache.spark" %% s"spark-sql" % sparkVersion % "provided"
+libraryDependencies += "org.apache.spark" %% s"spark-core" % sparkVersion % "provided"
+libraryDependencies += "org.apache.spark" %% s"spark-catalyst" % sparkVersion % "provided"
+libraryDependencies += "org.apache.spark" %% s"spark-hive" % sparkVersion % "provided"
+
+libraryDependencies += "org.scalatest" %% s"scalatest" % "3.2.3" % "test"
+libraryDependencies += "org.scalacheck" %% s"scalacheck" % "1.14.2" % "test"
+
+fork in Test := true
+parallelExecution in Test := true

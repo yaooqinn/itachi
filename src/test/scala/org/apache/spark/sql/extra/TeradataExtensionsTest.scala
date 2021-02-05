@@ -17,10 +17,11 @@
 
 package org.apache.spark.sql.extra
 
-import org.apache.spark.sql.{AnalysisException, DataFrame, QueryTest, Row}
-import org.apache.spark.sql.test.SharedSparkSession
+import org.apache.spark.SparkException
 
-class TeradataExtensionsTest extends QueryTest with SharedSparkSession {
+import org.apache.spark.sql.{AnalysisException, DataFrame, Row}
+
+class TeradataExtensionsTest extends SparkSessionHelper {
 
   override def beforeAll(): Unit = {
     super.beforeAll()
@@ -69,7 +70,7 @@ class TeradataExtensionsTest extends QueryTest with SharedSparkSession {
     // TODO: handle child expression fail in analysis?
     intercept[AnalysisException](spark.sql("select try(date_part('aha', timestamp '2020-04-01'))"))
     spark.sql("set spark.sql.ansi.enabled=true")
-    intercept[RuntimeException](spark.sql("select assert_true(1<0)").collect())
+    intercept[SparkException](spark.sql("select assert_true(1<0)").collect())
 
     val res1 = spark.sql("select try(assert_true(1<0))")
     assert(res1.head().isNullAt(0))
@@ -77,7 +78,8 @@ class TeradataExtensionsTest extends QueryTest with SharedSparkSession {
       spark.sql("select try(assert_true(3 < b)) from values (1, 2), (2, 3), (4, 5) t(a, b)")
     assert(res2.head().isNullAt(0))
     spark.sql(
-      "create table abcde as select cast(a as string), b from values (interval 1 day , 2)," +
+      "create table abcde using parquet as select cast(a as string)," +
+        " b from values (interval 1 day , 2)," +
         " (interval 2 day, 3), (interval 6 month, 0) t(a, b)")
     assert(spark.sql("select try(cast(a as interval) / b) from abcde where b = 0")
       .head().isNullAt(0))

@@ -49,3 +49,4 @@ warehouse/
 spark-warehouse/
 
 .idea/vcs.xml
+.bsp

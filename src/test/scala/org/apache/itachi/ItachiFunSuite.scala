@@ -15,13 +15,9 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql.catalyst.expressions.postgresql
+package org.apache.itachi
 
-import org.scalatest.FunSuite
+import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach}
+import org.scalatest.funsuite.AnyFunSuite
 
-import org.apache.spark.sql.catalyst.expressions.ExpressionEvalHelper
-
-//class ScaleTest extends FunSuite {
-//
-//  test("")
-//}
+trait ItachiFunSuite extends AnyFunSuite with BeforeAndAfterAll with BeforeAndAfterEach

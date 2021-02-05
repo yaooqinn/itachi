@@ -21,11 +21,12 @@ import scala.util.control.NonFatal
 
 import org.apache.spark.sql.catalyst.{FunctionIdentifier, InternalRow}
 import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionDescription, ExpressionInfo, UnaryExpression}
-import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, CodeGenerator, ExprCode, JavaCode}
+import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, CodeGenerator, ExprCode}
 import org.apache.spark.sql.catalyst.expressions.codegen.Block._
 import org.apache.spark.sql.extra.FunctionDescription
 import org.apache.spark.sql.types.DataType
 
+// TODO: This Function should be updated to the community approved but not merged status
 @ExpressionDescription(
   usage = "_FUNC_(expr) - Evaluate an expression and handle certain types of execution errors by" +
     " returning NULL.\nIn cases where it is preferable that queries produce NULL instead of" +
