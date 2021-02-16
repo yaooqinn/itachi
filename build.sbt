@@ -32,8 +32,6 @@ libraryDependencies += "org.scalacheck" %% s"scalacheck" % "1.14.2" % "test"
 fork in Test := true
 parallelExecution in Test := true
 
-addSbtPlugin("com.geirsson" % "sbt-ci-release" % "1.5.5")
-
 inThisBuild(List(
   organization := "com.github.yaooqinn",
   homepage := Some(url("https://github.com/yaooqinn/itachi")),
