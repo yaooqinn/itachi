@@ -17,8 +17,6 @@
 
 name := "itachi"
 
-version := "0.0.1"
-
 scalaVersion := "2.12.10"
 
 val sparkVersion = "3.1.0"
@@ -33,3 +31,19 @@ libraryDependencies += "org.scalacheck" %% s"scalacheck" % "1.14.2" % "test"
 
 fork in Test := true
 parallelExecution in Test := true
+
+addSbtPlugin("com.geirsson" % "sbt-ci-release" % "1.5.5")
+
+inThisBuild(List(
+  organization := "com.github.yaooqinn",
+  homepage := Some(url("https://github.com/yaooqinn/itachi")),
+  licenses := List("Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")),
+  developers := List(
+    Developer(
+      "yaooqinn",
+      "Kent Yao",
+      "yao@apache.org",
+      url("https://kyuubi.readthedocs.io/")
+    )
+  )
+))
