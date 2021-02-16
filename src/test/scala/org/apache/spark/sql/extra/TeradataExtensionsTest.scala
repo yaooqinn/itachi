@@ -18,7 +18,6 @@
 package org.apache.spark.sql.extra
 
 import org.apache.spark.SparkException
-
 import org.apache.spark.sql.{AnalysisException, DataFrame, Row}
 
 class TeradataExtensionsTest extends SparkSessionHelper {
@@ -72,11 +71,8 @@ class TeradataExtensionsTest extends SparkSessionHelper {
     spark.sql("set spark.sql.ansi.enabled=true")
     intercept[SparkException](spark.sql("select assert_true(1<0)").collect())
 
-    val res1 = spark.sql("select try(assert_true(1<0))")
-    assert(res1.head().isNullAt(0))
-    val res2 =
-      spark.sql("select try(assert_true(3 < b)) from values (1, 2), (2, 3), (4, 5) t(a, b)")
-    assert(res2.head().isNullAt(0))
+    intercept[SparkException](spark.sql("select try(assert_true(1<0))").collect())
+
     spark.sql(
       "create table abcde using parquet as select cast(a as string)," +
         " b from values (interval 1 day , 2)," +
