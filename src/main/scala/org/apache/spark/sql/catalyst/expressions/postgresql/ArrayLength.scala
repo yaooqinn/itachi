@@ -18,12 +18,22 @@
 package org.apache.spark.sql.catalyst.expressions.postgresql
 
 import org.apache.spark.sql.catalyst.FunctionIdentifier
-import org.apache.spark.sql.catalyst.expressions.{BinaryExpression, Expression, ExpressionInfo, ImplicitCastInputTypes}
-import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, CodegenFallback, ExprCode}
+import org.apache.spark.sql.catalyst.expressions.{BinaryExpression, Expression, ExpressionDescription, ExpressionInfo, ImplicitCastInputTypes}
+import org.apache.spark.sql.catalyst.expressions.codegen.CodegenFallback
 import org.apache.spark.sql.catalyst.util.ArrayData
 import org.apache.spark.sql.extra.FunctionDescription
 import org.apache.spark.sql.types.{AbstractDataType, ArrayType, DataType, IntegerType}
 
+@ExpressionDescription(
+  usage = """
+  _FUNC_(anyarray, int) - returns the length of the requested array dimension
+  """,
+  examples = """
+    Examples:
+      > SELECT _FUNC_(array(1, 2, 3), 1);
+       3
+  """,
+  since = "0.1.0")
 case class ArrayLength(left: Expression, right: Expression)
   extends BinaryExpression with ImplicitCastInputTypes with CodegenFallback {
 

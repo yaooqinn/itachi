@@ -19,14 +19,14 @@ package org.apache.spark.sql.catalyst.expressions.teradata
 
 import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionInfo, LeafMathExpression}
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 
 case class Infinity() extends LeafMathExpression(Double.PositiveInfinity, "infinity")
 
 object Infinity {
   val fd: FunctionDescription = (
     new FunctionIdentifier("infinity"),
-    new ExpressionInfo(classOf[Infinity].getCanonicalName, "infinity"),
+    ExpressionUtils.getExpressionInfo(classOf[Infinity], "infinity"),
     (_: Seq[Expression]) => Infinity())
 
 }

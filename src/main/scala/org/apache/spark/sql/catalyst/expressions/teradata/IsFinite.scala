@@ -18,10 +18,10 @@
 package org.apache.spark.sql.catalyst.expressions.teradata
 
 import org.apache.spark.sql.catalyst.{FunctionIdentifier, InternalRow}
-import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionInfo, ImplicitCastInputTypes, Predicate, UnaryExpression}
+import org.apache.spark.sql.catalyst.expressions.{Expression, ImplicitCastInputTypes, Predicate, UnaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, ExprCode, FalseLiteral}
 import org.apache.spark.sql.catalyst.expressions.codegen.Block._
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types.{AbstractDataType, DoubleType, FloatType, TypeCollection}
 
 case class IsFinite(child: Expression) extends UnaryExpression
@@ -62,6 +62,6 @@ object IsFinite {
 
   val fd: FunctionDescription = (
     new FunctionIdentifier("is_finite"),
-    new ExpressionInfo(classOf[IsFinite].getCanonicalName, "is_finite"),
+    ExpressionUtils.getExpressionInfo(classOf[IsFinite], "is_finite"),
     (children: Seq[Expression]) => IsFinite(children.head))
 }

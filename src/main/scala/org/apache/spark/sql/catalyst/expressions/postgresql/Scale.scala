@@ -22,7 +22,7 @@ import scala.util.control.NonFatal
 import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionInfo, ImplicitCastInputTypes, UnaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, ExprCode}
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types._
 
 case class Scale(child: Expression) extends UnaryExpression with ImplicitCastInputTypes {
@@ -67,7 +67,7 @@ case class Scale(child: Expression) extends UnaryExpression with ImplicitCastInp
 object Scale {
   val fd: FunctionDescription = (
     new FunctionIdentifier("scale"),
-    new ExpressionInfo(classOf[Scale].getCanonicalName, "scale"),
+    ExpressionUtils.getExpressionInfo(classOf[Scale], "scale"),
     (children: Seq[Expression]) => Scale(children.head))
 
 }

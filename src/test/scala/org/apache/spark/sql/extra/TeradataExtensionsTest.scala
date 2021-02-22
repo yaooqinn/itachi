@@ -136,4 +136,8 @@ class TeradataExtensionsTest extends SparkSessionHelper {
     val frame2 = spark.sql("SELECT isnan(nan() + 0)")
     checkAnswer(frame2, Seq(Row(true)))
   }
+
+  test("generate function doc") {
+    ItachiTestUtils.generateFunctionDocument(spark, "presto")
+  }
 }

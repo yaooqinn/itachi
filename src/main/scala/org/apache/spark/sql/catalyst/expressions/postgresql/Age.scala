@@ -18,11 +18,25 @@
 package org.apache.spark.sql.catalyst.expressions.postgresql
 
 import org.apache.spark.sql.catalyst.FunctionIdentifier
-import org.apache.spark.sql.catalyst.expressions.{BinaryExpression, CurrentDate, Expression, ExpressionInfo, ImplicitCastInputTypes}
+import org.apache.spark.sql.catalyst.expressions.{BinaryExpression, CurrentDate, Expression, ExpressionDescription, ExpressionInfo, ImplicitCastInputTypes}
 import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, ExprCode}
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types.{AbstractDataType, CalendarIntervalType, DataType, TimestampType}
 
+// scalastyle:off line.size.limit
+@ExpressionDescription(
+  usage = """
+    _FUNC_(expr1, expr2) - Subtract arguments, producing a "symbolic" result that uses years and months
+    _FUNC_(expr) - Subtract from current_date (at midnight)
+  """,
+  examples = """
+    > SELECT _FUNC_(timestamp '1957-06-13');
+     43 years 9 months 27 days
+    > SELECT _FUNC_(timestamp '2001-04-10', timestamp '1957-06-13');
+     43 years 9 months 27 days
+  """,
+  since = "0.1.0")
+// scalastyle:on line.size.limit
 case class Age(end: Expression, start: Expression)
   extends BinaryExpression with ImplicitCastInputTypes {
   override def left: Expression = end
@@ -47,7 +61,7 @@ object Age {
 
   val fd: FunctionDescription = (
     new FunctionIdentifier("age"),
-    new ExpressionInfo(classOf[Age].getCanonicalName, "unnest"),
+    ExpressionUtils.getExpressionInfo(classOf[Age], "age"),
     (children: Seq[Expression]) => if ( children.size == 1) {
       Age(CurrentDate(), children.head)
     } else {

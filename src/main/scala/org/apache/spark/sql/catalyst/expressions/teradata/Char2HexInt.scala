@@ -20,7 +20,7 @@ package org.apache.spark.sql.catalyst.expressions.teradata
 import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.expressions.{ExpectsInputTypes, Expression, ExpressionDescription, ExpressionInfo, UnaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, ExprCode}
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types.{AbstractDataType, DataType, StringType}
 import org.apache.spark.unsafe.types.UTF8String
 
@@ -31,7 +31,8 @@ import org.apache.spark.unsafe.types.UTF8String
     Examples:
       > SELECT _FUNC_('Spark SQL');
         0053007000610072006B002000530051004C
-  """)
+  """,
+  since = "0.1.0")
 case class Char2HexInt(
     child: Expression) extends UnaryExpression with ExpectsInputTypes {
 
@@ -69,7 +70,7 @@ object Char2HexInt {
 
   val fd: FunctionDescription = (
     new FunctionIdentifier("char2hexint"),
-    new ExpressionInfo(classOf[Char2HexInt].getCanonicalName, "char2hexint"),
+    ExpressionUtils.getExpressionInfo(classOf[Char2HexInt], "char2hexint"),
     (children: Seq[Expression]) => Char2HexInt(children.head))
 
 }

@@ -23,7 +23,7 @@ import org.apache.spark.sql.catalyst.expressions.{BinaryExpression, Expression, 
 import org.apache.spark.sql.catalyst.expressions.codegen._
 import org.apache.spark.sql.catalyst.expressions.codegen.Block._
 import org.apache.spark.sql.catalyst.util.{ArrayData, GenericArrayData, TypeUtils}
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types.{ArrayType, AtomicType, DataType, NullType}
 
 @ExpressionDescription(
@@ -41,7 +41,7 @@ import org.apache.spark.sql.types.{ArrayType, AtomicType, DataType, NullType}
        [3,4,null]
        [5]
   """,
-  since = "3.0.0")
+  since = "0.1.0")
 case class ArrayAppend(left: Expression, right: Expression) extends BinaryExpression {
 
   private lazy val elementType: DataType = left.dataType match {
@@ -183,7 +183,7 @@ object ArrayAppend {
 
   val fd: FunctionDescription = (
     new FunctionIdentifier("array_append"),
-    new ExpressionInfo(classOf[ArrayAppend].getCanonicalName, "array_append"),
+    ExpressionUtils.getExpressionInfo(classOf[ArrayAppend], "array_append"),
     (children: Seq[Expression]) => ArrayAppend(children.head, children.last))
 
 }

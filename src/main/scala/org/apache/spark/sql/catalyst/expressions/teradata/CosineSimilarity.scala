@@ -21,7 +21,7 @@ import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionInfo, GetMapValueUtil}
 import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, ExprCode}
 import org.apache.spark.sql.catalyst.util.MapData
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types._
 
 case class CosineSimilarity(
@@ -113,7 +113,7 @@ case class CosineSimilarity(
 object CosineSimilarity {
   val fd: FunctionDescription = (
     new FunctionIdentifier("cosine_similarity"),
-    new ExpressionInfo(classOf[CosineSimilarity].getCanonicalName, "cosine_similarity"),
+    ExpressionUtils.getExpressionInfo(classOf[CosineSimilarity], "cosine_similarity"),
     (children: Seq[Expression]) => CosineSimilarity(children.head, children.last))
 
 }

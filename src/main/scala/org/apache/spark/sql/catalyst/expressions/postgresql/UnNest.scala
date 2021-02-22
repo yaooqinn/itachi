@@ -24,7 +24,7 @@ import org.apache.spark.sql.catalyst.analysis.TypeCheckResult
 import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionDescription, ExpressionInfo, Generator, UnaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.CodegenFallback
 import org.apache.spark.sql.catalyst.util.{ArrayData, GenericArrayData, TypeUtils}
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types.{ArrayType, AtomicType, DataType, NullType, StructType}
 
 @ExpressionDescription(
@@ -45,7 +45,7 @@ import org.apache.spark.sql.types.{ArrayType, AtomicType, DataType, NullType, St
        3
        4
   """,
-  since = "3.0.0")
+  since = "0.1.0")
 case class UnNest(child: Expression) extends UnaryExpression with Generator with CodegenFallback {
 
   override def elementSchema: StructType = {
@@ -109,7 +109,7 @@ object UnNest {
 
   val fd: FunctionDescription = (
     new FunctionIdentifier("unnest"),
-    new ExpressionInfo(classOf[UnNest].getCanonicalName, "unnest"),
+    ExpressionUtils.getExpressionInfo(classOf[UnNest], "unnest"),
     (children: Seq[Expression]) => UnNest(children.head))
 
 }
