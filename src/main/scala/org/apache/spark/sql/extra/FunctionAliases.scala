@@ -32,7 +32,7 @@ object FunctionAliases {
    */
   val editDistance: FunctionDescription = {
     (new FunctionIdentifier("EDITDISTANCE"),
-      new ExpressionInfo(classOf[Levenshtein].getCanonicalName, "EDITDISTANCE"),
+      ExpressionUtils.getExpressionInfo(classOf[Levenshtein], "EDITDISTANCE"),
       (children: Seq[Expression]) => Levenshtein(children.head, children.last))
   }
 
@@ -43,23 +43,23 @@ object FunctionAliases {
    */
   val index: FunctionDescription = {
     (new FunctionIdentifier("index"),
-      new ExpressionInfo(classOf[StringLocate].getCanonicalName, "index"),
+      ExpressionUtils.getExpressionInfo(classOf[StringLocate], "index"),
       (children: Seq[Expression]) => StringLocate(children(1), children.head, Literal(1)))
   }
 
   val from_base: FunctionDescription = (
     new FunctionIdentifier("from_base"),
-    new ExpressionInfo(classOf[Conv].getCanonicalName, "from_base"),
+    ExpressionUtils.getExpressionInfo(classOf[Conv], "from_base"),
     (children: Seq[Expression]) => Conv(children.head, children.last, Literal(10)))
 
   val to_base: FunctionDescription = (
     new FunctionIdentifier("to_base"),
-    new ExpressionInfo(classOf[Conv].getCanonicalName, "to_base"),
+    ExpressionUtils.getExpressionInfo(classOf[Conv], "to_base"),
     (children: Seq[Expression]) => Conv(children.head, Literal(10), children.last))
 
   // array_cat
   val array_cat: FunctionDescription = (
     new FunctionIdentifier("array_cat"),
-    new ExpressionInfo(classOf[Concat].getCanonicalName, "array_cat"),
+    ExpressionUtils.getExpressionInfo(classOf[Concat], "array_cat"),
     (children: Seq[Expression]) => Concat(children))
 }

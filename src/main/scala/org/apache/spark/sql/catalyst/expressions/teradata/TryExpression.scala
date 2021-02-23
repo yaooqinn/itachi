@@ -24,7 +24,7 @@ import org.apache.spark.sql.catalyst.{FunctionIdentifier, InternalRow}
 import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionDescription, ExpressionInfo, UnaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, CodeGenerator, ExprCode}
 import org.apache.spark.sql.catalyst.expressions.codegen.Block._
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types.DataType
 
 // scalastyle:off line.size.limit
@@ -111,6 +111,6 @@ object TryExpression {
 
   val fd: FunctionDescription = (
     new FunctionIdentifier("try"),
-    new ExpressionInfo(classOf[TryExpression].getCanonicalName, "try"),
+    ExpressionUtils.getExpressionInfo(classOf[TryExpression], "try"),
     (children: Seq[Expression]) => TryExpression(children.head))
 }

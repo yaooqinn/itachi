@@ -21,7 +21,7 @@ import org.apache.spark.sql.catalyst.{FunctionIdentifier, InternalRow}
 import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionInfo, ImplicitCastInputTypes, Predicate, UnaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.{CodegenContext, ExprCode, FalseLiteral}
 import org.apache.spark.sql.catalyst.expressions.codegen.Block._
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types.{AbstractDataType, DoubleType, FloatType, TypeCollection}
 
 case class IsInfinite(child: Expression) extends UnaryExpression
@@ -61,6 +61,6 @@ case class IsInfinite(child: Expression) extends UnaryExpression
 object IsInfinite {
   val fd: FunctionDescription = (
     new FunctionIdentifier("is_infinite"),
-    new ExpressionInfo(classOf[IsInfinite].getCanonicalName, "is_infinite"),
+    ExpressionUtils.getExpressionInfo(classOf[IsInfinite], "is_infinite"),
     (children: Seq[Expression]) => IsInfinite(children.head))
 }

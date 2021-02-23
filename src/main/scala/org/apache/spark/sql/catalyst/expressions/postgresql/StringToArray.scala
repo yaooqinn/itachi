@@ -23,7 +23,7 @@ import org.apache.spark.sql.catalyst.{FunctionIdentifier, InternalRow}
 import org.apache.spark.sql.catalyst.expressions.{ExpectsInputTypes, Expression, ExpressionDescription, ExpressionInfo, Literal, TernaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.CodegenFallback
 import org.apache.spark.sql.catalyst.util.GenericArrayData
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types.{AbstractDataType, ArrayType, DataType, StringType}
 import org.apache.spark.unsafe.types.UTF8String
 
@@ -34,7 +34,8 @@ import org.apache.spark.unsafe.types.UTF8String
     Examples:
       > SELECT _FUNC_('xx~^~yy~^~zz~^~', '~^~', 'yy');
        ["xx",null,"zz",""]
-  """, since = "3.0.0")
+  """,
+  since = "0.1.0")
 case class StringToArray(text: Expression, delimiter: Expression, replaced: Expression)
   extends TernaryExpression with CodegenFallback with ExpectsInputTypes {
 
@@ -80,7 +81,7 @@ case class StringToArray(text: Expression, delimiter: Expression, replaced: Expr
 object StringToArray {
   val fd: FunctionDescription = (
     new FunctionIdentifier("string_to_array"),
-    new ExpressionInfo(classOf[StringToArray].getCanonicalName, "string_to_array"),
+    ExpressionUtils.getExpressionInfo(classOf[StringToArray], "string_to_array"),
     (children: Seq[Expression]) => StringToArray(children.head, children(1), children.last))
 
 }

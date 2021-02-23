@@ -15,18 +15,33 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql.catalyst.expressions.teradata
+package org.apache.spark.sql.extra
 
-import org.apache.spark.sql.catalyst.FunctionIdentifier
-import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionInfo, LeafMathExpression}
-import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
+import org.apache.spark.sql.catalyst.expressions.{ExpressionDescription, ExpressionInfo}
 
-case class NaN() extends LeafMathExpression(Double.NaN, "nan")
+object ExpressionUtils {
 
-object NaN {
-  val fd: FunctionDescription = (
-    new FunctionIdentifier("nan"),
-    ExpressionUtils.getExpressionInfo(classOf[NaN], "nan"),
-    (_: Seq[Expression]) => NaN())
+  def getExpressionInfo[T](exprClz: Class[T], name: String): ExpressionInfo = {
+    val ed = exprClz.getAnnotation(classOf[ExpressionDescription])
+
+    if (ed != null) {
+      new ExpressionInfo(
+        exprClz.getCanonicalName,
+        "",
+        name,
+        ed.usage(),
+        ed.arguments(),
+        ed.examples(),
+        ed.note(),
+        "array_funcs", // meaningless
+        ed.since(),
+        ed.deprecated())
+    } else {
+      new ExpressionInfo(
+        exprClz.getSimpleName,
+        "",
+        name)
+    }
+  }
 
 }

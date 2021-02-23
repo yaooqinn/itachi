@@ -22,7 +22,7 @@ import java.util.regex.Pattern
 import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.expressions.{Expression, ExpressionDescription, ExpressionInfo, ImplicitCastInputTypes, TernaryExpression}
 import org.apache.spark.sql.catalyst.expressions.codegen.CodegenFallback
-import org.apache.spark.sql.extra.FunctionDescription
+import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types.{AbstractDataType, DataType, IntegerType, StringType}
 import org.apache.spark.unsafe.types.UTF8String
 
@@ -34,7 +34,7 @@ import org.apache.spark.unsafe.types.UTF8String
       > SELECT _FUNC_('abc~@~def~@~ghi', '~@~', 2);
        def
   """,
-  since = "3.0.0")
+  since = "0.1.0")
 case class SplitPart(text: Expression, delimiter: Expression, field: Expression)
   extends TernaryExpression with ImplicitCastInputTypes with CodegenFallback {
 
@@ -68,7 +68,7 @@ object SplitPart {
 
   val fd: FunctionDescription = (
     new FunctionIdentifier("split_part"),
-    new ExpressionInfo(classOf[SplitPart].getCanonicalName, "split_part"),
+    ExpressionUtils.getExpressionInfo(classOf[SplitPart], "split_part"),
     (children: Seq[Expression]) => SplitPart(children.head, children(1), children.last))
 
 }
