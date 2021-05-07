@@ -15,25 +15,34 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql.extra
+package org.apache
 
-import org.apache.spark.sql.SparkSessionExtensions
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.catalyst.expressions.ansi.RegrCount
 import org.apache.spark.sql.catalyst.expressions.postgresql.{Age, ArrayAppend, ArrayLength, IntervalJustifyLike, Scale, SplitPart, StringToArray, UnNest}
+import org.apache.spark.sql.extra.{FunctionAliases, FunctionDescription}
 
-class PostgreSQLExtensions extends Extensions {
-  override def apply(ext: SparkSessionExtensions): Unit = {
-    ext.injectFunction(Age.fd)
-    ext.injectFunction(ArrayAppend.fd)
-    ext.injectFunction(ArrayLength.fd)
-    ext.injectFunction(FunctionAliases.array_cat)
-    ext.injectFunction(IntervalJustifyLike.justifyDays)
-    ext.injectFunction(IntervalJustifyLike.justifyHours)
-    ext.injectFunction(IntervalJustifyLike.justifyInterval)
-    ext.injectFunction(RegrCount.fd)
-    ext.injectFunction(Scale.fd)
-    ext.injectFunction(SplitPart.fd)
-    ext.injectFunction(StringToArray.fd)
-    ext.injectFunction(UnNest.fd)
+package object itachi {
+
+  private def registerFunction(function: FunctionDescription): Unit = {
+    SparkSession.active.sessionState
+      .functionRegistry
+      .registerFunction(function._1, function._2, function._3)
+  }
+
+  def registerPostgresFunctions: Unit = {
+    registerFunction(Age.fd)
+    registerFunction(ArrayAppend.fd)
+    registerFunction(ArrayLength.fd)
+    registerFunction(IntervalJustifyLike.justifyDays)
+    registerFunction(IntervalJustifyLike.justifyHours)
+    registerFunction(IntervalJustifyLike.justifyInterval)
+
+    registerFunction(Scale.fd)
+    registerFunction(SplitPart.fd)
+    registerFunction(StringToArray.fd)
+    registerFunction(UnNest.fd)
+
+    registerFunction(RegrCount.fd)
   }
 }

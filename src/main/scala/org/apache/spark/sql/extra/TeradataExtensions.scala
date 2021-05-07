@@ -18,6 +18,7 @@
 package org.apache.spark.sql.extra
 
 import org.apache.spark.sql.SparkSessionExtensions
+import org.apache.spark.sql.catalyst.expressions.ansi.RegrCount
 import org.apache.spark.sql.catalyst.expressions.teradata._
 
 class TeradataExtensions extends Extensions {
@@ -32,6 +33,7 @@ class TeradataExtensions extends Extensions {
     extensions.injectFunction(IsFinite.fd)
     extensions.injectFunction(IsInfinite.fd)
     extensions.injectFunction(NaN.fd)
+    extensions.injectFunction(RegrCount.fd)
     extensions.injectFunction(TryExpression.fd)
   }
 }

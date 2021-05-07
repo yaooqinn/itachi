@@ -28,7 +28,7 @@ Config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.exte
 Databricks Installation
 --------------
 
-Create an [init script](https://docs.databricks.com/clusters/init-scripts.html) in DBFS:
+Create an `init script <https://docs.databricks.com/clusters/init-scripts.html>`_ in DBFS:
 
     dbutils.fs.mkdirs("dbfs:/databricks/scripts/")
 
