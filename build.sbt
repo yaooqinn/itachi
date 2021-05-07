@@ -17,6 +17,8 @@
 
 name := "itachi"
 
+version := "0.2.0"
+
 scalaVersion := "2.12.10"
 
 val sparkVersion = "3.1.0"
