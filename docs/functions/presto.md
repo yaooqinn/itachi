@@ -216,6 +216,37 @@ NaN
 
 - **Since**
 
+## regr_count
+- **Usage**
+```scala
+
+    regr_count(expr1, expr2) - Returns the count of all rows in an expression pair. The function eliminates expression pairs where either expression in the pair is NULL. If no rows remain, the function returns 0.
+  
+```
+- **Arguments**
+```scala
+
+      expr1	The dependent DOUBLE PRECISION expression
+      expr2	The independent DOUBLE PRECISION expression
+      
+```
+- **Examples**
+```sql
+
+    > SELECT regr_count(1, 2);
+     1
+    > SELECT regr_count(1, null);
+     0
+  
+```
+- **Class**
+```scala
+org.apache.spark.sql.catalyst.expressions.ansi.RegrCount
+```
+- **Note**
+
+- **Since**
+0.2.0
 ## to_base
 - **Usage**
 ```scala
