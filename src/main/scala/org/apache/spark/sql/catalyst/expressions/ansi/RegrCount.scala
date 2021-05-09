@@ -27,7 +27,7 @@ import org.apache.spark.sql.types.{AbstractDataType, DataType, DoubleType, LongT
 // scalastyle:off line.size.limit
 @ExpressionDescription(
   usage = """
-    _FUNC_(expr1, expr2) - Returns the count of all rows in an expression pair. The function eliminates expression pairs where either expression in the pair is NULL.If no rows remain, the function returns 0.
+    _FUNC_(expr1, expr2) - Returns the count of all rows in an expression pair. The function eliminates expression pairs where either expression in the pair is NULL. If no rows remain, the function returns 0.
   """,
   arguments =
     """
@@ -41,6 +41,7 @@ import org.apache.spark.sql.types.{AbstractDataType, DataType, DoubleType, LongT
      0
   """,
   since = "0.2.0",
+  note = "",
   group = "agg_funcs")
 // scalastyle:on line.size.limit
 case class RegrCount(y: Expression, x: Expression)
