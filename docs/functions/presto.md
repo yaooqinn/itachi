@@ -220,7 +220,7 @@ NaN
 - **Usage**
 ```scala
 
-    regr_count(expr1, expr2) - Returns the count of all rows in an expression pair. The function eliminates expression pairs where either expression in the pair is NULL.If no rows remain, the function returns 0.
+    regr_count(expr1, expr2) - Returns the count of all rows in an expression pair. The function eliminates expression pairs where either expression in the pair is NULL. If no rows remain, the function returns 0.
   
 ```
 - **Arguments**
