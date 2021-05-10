@@ -20,6 +20,7 @@ package org.apache
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.catalyst.expressions.ansi.RegrCount
 import org.apache.spark.sql.catalyst.expressions.postgresql.{Age, ArrayAppend, ArrayLength, IntervalJustifyLike, Scale, SplitPart, StringToArray, UnNest}
+import org.apache.spark.sql.catalyst.expressions.teradata.{Char2HexInt, CosineSimilarity, Infinity, IsFinite, IsInfinite, NaN, TryExpression}
 import org.apache.spark.sql.extra.{FunctionAliases, FunctionDescription}
 
 package object itachi {
@@ -41,8 +42,25 @@ package object itachi {
     registerFunction(Scale.fd)
     registerFunction(SplitPart.fd)
     registerFunction(StringToArray.fd)
+
     registerFunction(UnNest.fd)
 
     registerFunction(RegrCount.fd)
   }
+
+  def registerTeradataFunctions: Unit = {
+    registerFunction(Char2HexInt.fd)
+    registerFunction(CosineSimilarity.fd)
+    registerFunction(FunctionAliases.editDistance)
+    registerFunction(FunctionAliases.from_base)
+    registerFunction(FunctionAliases.index)
+    registerFunction(FunctionAliases.to_base)
+    registerFunction(Infinity.fd)
+    registerFunction(IsFinite.fd)
+    registerFunction(IsInfinite.fd)
+    registerFunction(NaN.fd)
+    registerFunction(RegrCount.fd)
+    registerFunction(TryExpression.fd)
+  }
+
 }

@@ -26,6 +26,7 @@ class ItachiTest extends SparkSessionHelper {
   override def beforeAll(): Unit = {
     super.beforeAll()
     org.apache.itachi.registerPostgresFunctions
+    org.apache.itachi.registerTeradataFunctions
   }
 
   def checkAnswer(df: DataFrame, expect: Seq[Row]): Unit = {
@@ -39,16 +40,18 @@ class ItachiTest extends SparkSessionHelper {
     )
   }
 
-
   test("regr_count") {
     val query = "select k, count(*), regr_count(v, v2)" +
       " from values(1, 10, null), (2, 10, 11), (2, 20, 22), (2, 25,null), (2, 30, 35) t(k, v, v2)" +
       " group by k"
     checkAnswer(sql(query), Seq(Row(1, 1, 0), Row(2, 4, 3)))
-
     checkAnswer(sql("SELECT REGR_COUNT(1, 2)"), Seq(Row(1)))
     checkAnswer(sql("SELECT REGR_COUNT(1, null)"), Seq(Row(0)))
+  }
 
+  test("cosine_similarity") {
+    val frame = spark.sql("SELECT cosine_similarity(MAP('a', 1.0), MAP('a', 2.0))")
+    checkAnswer(frame, Seq(Row(1.0)))
   }
 
 }

@@ -20,31 +20,13 @@ Here's `the Maven link <https://repo1.maven.org/maven2/com/github/yaooqinn/itach
 
 itachi requires Spark 3+.
 
-Config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.extensions=org.apache.spark.sql.extra.PostgreSQLExtensions`
-
-- org.apache.spark.sql.extra.PostgreSQLExtensions
-- org.apache.spark.sql.extra.TeradataExtensions
-
-Databricks Installation
+Simple function registration
 --------------
 
-Create an `init script <https://docs.databricks.com/clusters/init-scripts.html>`_ in DBFS:
+Access the Postgres / Teradata functions with these commands:::
 
-    dbutils.fs.mkdirs("dbfs:/databricks/scripts/")
-
-    dbutils.fs.put("/databricks/scripts/itachi-install.sh","""
-    #!/bin/bash
-    wget --quiet -O /mnt/driver-daemon/jars/itachi_2.12-0.1.0.jar https://repo1.maven.org/maven2/com/github/yaooqinn/itachi_2.12/0.1.0/itachi_2.12-0.1.0.jar""", true)
-
-Before starting the cluster, set the Spark Config:
-
-    spark.sql.extensions org.apache.spark.sql.extra.PostgreSQLExtensions
-
-Also set the DBFS file path before starting the cluster:
-
-    dbfs:/databricks/scripts/itachi-install.sh
-
-You can now attach a notebook to the cluster using Postgres SQL syntax.
+    org.apache.itachi.registerPostgresFunctions
+    org.apache.itachi.registerTeradataFunctions
 
 Simple example
 --------------
@@ -72,6 +54,35 @@ Concatenate the two arrays:::
     +------------+
 
 itachi lets you write Spark SQL code that looks just like Postgres SQL!
+
+Spark SQL extensions installation
+--------------
+
+Config your spark applications with `spark.sql.extensions`, e.g. `spark.sql.extensions=org.apache.spark.sql.extra.PostgreSQLExtensions`
+
+- org.apache.spark.sql.extra.PostgreSQLExtensions
+- org.apache.spark.sql.extra.TeradataExtensions
+
+Databricks Installation
+--------------
+
+Create an `init script <https://docs.databricks.com/clusters/init-scripts.html>`_ in DBFS:::
+
+    dbutils.fs.mkdirs("dbfs:/databricks/scripts/")
+
+    dbutils.fs.put("/databricks/scripts/itachi-install.sh","""
+    #!/bin/bash
+    wget --quiet -O /mnt/driver-daemon/jars/itachi_2.12-0.1.0.jar https://repo1.maven.org/maven2/com/github/yaooqinn/itachi_2.12/0.1.0/itachi_2.12-0.1.0.jar""", true)
+
+Before starting the cluster, set the Spark Config:::
+
+    spark.sql.extensions org.apache.spark.sql.extra.PostgreSQLExtensions
+
+Also set the DBFS file path before starting the cluster:::
+
+    dbfs:/databricks/scripts/itachi-install.sh
+
+You can now attach a notebook to the cluster using Postgres SQL syntax.
 
 Spark SQL Compliance
 --------------------
