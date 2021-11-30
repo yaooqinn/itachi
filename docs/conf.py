@@ -103,10 +103,10 @@ html_theme_options = {
     # an arbitrary url.
     'navbar_links': [
         ("Examples", "index.html#simple-example", True),
-        ("Postgres SQL", "functions/postgres"),
-        ("Presto", "functions/presto"),
+        ("Postgres SQL", "/functions/postgres"),
+        ("Presto", "/functions/presto"),
         ("Github", "https://github.com/yaooqinn/itachi", True),
-        ("Kyuubi", "https://kyuubi.readthedocs.io/en/latest/", True),
+        ("Apache Kyuubi", "https://kyuubi.apache.org/", True),
     ],
 
     # Render the next and previous page links in navbar. (Default: true)
@@ -168,6 +168,10 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 htmlhelp_basename = 'Recommonmarkdoc'
+
+html_css_files = [
+    'css/bootstrap.min.css',
+]
 
 github_doc_root = 'https://github.com/yaooqinn/itachi/tree/master/docs/'
 def setup(app):
