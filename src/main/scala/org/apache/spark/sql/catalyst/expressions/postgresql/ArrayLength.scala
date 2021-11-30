@@ -76,6 +76,10 @@ case class ArrayLength(left: Expression, right: Expression)
   override def inputTypes: Seq[AbstractDataType] = Seq(ArrayType, IntegerType)
 
   override def prettyName: String = "array_length"
+
+  override protected def withNewChildrenInternal(
+      newLeft: Expression, newRight: Expression): Expression =
+    copy(left = newLeft, right = newRight)
 }
 
 

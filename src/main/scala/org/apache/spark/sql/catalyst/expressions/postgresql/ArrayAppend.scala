@@ -177,6 +177,10 @@ case class ArrayAppend(left: Expression, right: Expression) extends BinaryExpres
   }
 
   override def prettyName: String = "array_append"
+
+  override protected def withNewChildrenInternal(
+      newLeft: Expression, newRight: Expression): Expression =
+    copy(left = newLeft, right = newRight)
 }
 
 object ArrayAppend {

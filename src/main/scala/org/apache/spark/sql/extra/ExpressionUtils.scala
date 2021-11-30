@@ -35,7 +35,8 @@ object ExpressionUtils {
         ed.note(),
         "array_funcs", // meaningless
         ed.since(),
-        ed.deprecated())
+        ed.deprecated(),
+        "built-in") // meaningless
     } else {
       new ExpressionInfo(
         exprClz.getSimpleName,

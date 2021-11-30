@@ -21,6 +21,7 @@ import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.dsl.expressions._
 import org.apache.spark.sql.catalyst.expressions.{AttributeReference, Expression, ExpressionDescription, If, ImplicitCastInputTypes, IsNull, Literal, Or}
 import org.apache.spark.sql.catalyst.expressions.aggregate.DeclarativeAggregate
+import org.apache.spark.sql.catalyst.trees.BinaryLike
 import org.apache.spark.sql.extra.{ExpressionUtils, FunctionDescription}
 import org.apache.spark.sql.types.{AbstractDataType, DataType, DoubleType, LongType}
 
@@ -44,8 +45,8 @@ import org.apache.spark.sql.types.{AbstractDataType, DataType, DoubleType, LongT
   note = "",
   group = "agg_funcs")
 // scalastyle:on line.size.limit
-case class RegrCount(y: Expression, x: Expression)
-    extends DeclarativeAggregate with ImplicitCastInputTypes {
+case class RegrCount(left: Expression, right: Expression)
+    extends DeclarativeAggregate with ImplicitCastInputTypes with BinaryLike[Expression] {
   override def prettyName: String = "regr_count"
   private lazy val regrCount = AttributeReference(prettyName, LongType, nullable = false)()
 
@@ -71,7 +72,10 @@ case class RegrCount(y: Expression, x: Expression)
 
   override def dataType: DataType = LongType
 
-  override def children: Seq[Expression] = Seq(y, x)
+  override protected def withNewChildrenInternal(
+      newLeft: Expression, newRight: Expression): Expression = {
+    copy(left = newLeft, right = newRight)
+  }
 }
 
 

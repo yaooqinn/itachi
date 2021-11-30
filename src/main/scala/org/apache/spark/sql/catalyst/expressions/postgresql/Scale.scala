@@ -62,6 +62,10 @@ case class Scale(child: Expression) extends UnaryExpression with ImplicitCastInp
 
   override def inputTypes: Seq[AbstractDataType] =
     Seq(TypeCollection(DoubleType, DecimalType, IntegralType))
+
+  override protected def withNewChildInternal(newChild: Expression): Expression = {
+    copy(child = newChild)
+  }
 }
 
 object Scale {

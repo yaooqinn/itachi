@@ -55,6 +55,11 @@ case class Age(end: Expression, start: Expression)
   }
 
   override def dataType: DataType = CalendarIntervalType
+
+  override protected def withNewChildrenInternal(
+      newLeft: Expression, newRight: Expression): Expression = {
+    copy(end = newLeft, start = newRight)
+  }
 }
 
 object Age {

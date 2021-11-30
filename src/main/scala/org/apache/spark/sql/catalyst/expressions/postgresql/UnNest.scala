@@ -103,6 +103,9 @@ case class UnNest(child: Expression) extends UnaryExpression with Generator with
       rows
     }
   }
+
+  override protected def withNewChildInternal(newChild: Expression): Expression =
+    copy(child = newChild)
 }
 
 object UnNest {

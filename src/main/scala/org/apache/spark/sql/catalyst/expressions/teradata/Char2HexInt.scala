@@ -49,6 +49,10 @@ case class Char2HexInt(
   override def dataType: DataType = StringType
 
   override def prettyName: String = "CHAR2HEXINT"
+
+  override protected def withNewChildInternal(newChild: Expression): Expression = {
+    copy(child = newChild)
+  }
 }
 
 object Char2HexInt {

@@ -76,7 +76,7 @@ class TeradataExtensionsTest extends SparkSessionHelper {
     spark.sql(
       "create table abcde using parquet as select cast(a as string)," +
         " b from values (interval 1 day , 2)," +
-        " (interval 2 day, 3), (interval 6 month, 0) t(a, b)")
+        " (interval 2 day, 3), (interval 5 day, 0) t(a, b)")
     assert(spark.sql("select try(cast(a as interval) / b) from abcde where b = 0")
       .head().isNullAt(0))
   }

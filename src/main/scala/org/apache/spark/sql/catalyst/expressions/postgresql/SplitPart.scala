@@ -40,8 +40,6 @@ case class SplitPart(text: Expression, delimiter: Expression, field: Expression)
 
   override def prettyName: String = "split_part"
 
-  override def children: Seq[Expression] = text :: delimiter :: field :: Nil
-
   override def inputTypes: Seq[AbstractDataType] = StringType :: StringType :: IntegerType :: Nil
 
   override def dataType: DataType = StringType
@@ -61,6 +59,17 @@ case class SplitPart(text: Expression, delimiter: Expression, field: Expression)
     } else {
       strings(index - 1)
     }
+  }
+
+  override def first: Expression = text
+
+  override def second: Expression = delimiter
+
+  override def third: Expression = field
+
+  override protected def withNewChildrenInternal(
+      newFirst: Expression, newSecond: Expression, newThird: Expression): Expression = {
+    copy(text = newFirst, delimiter = newSecond, field = newThird)
   }
 }
 

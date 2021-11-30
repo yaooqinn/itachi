@@ -56,6 +56,10 @@ case class IsFinite(child: Expression) extends UnaryExpression
   }
 
   override def prettyName: String = "is_infinite"
+
+  override protected def withNewChildInternal(newChild: Expression): Expression = {
+    copy(child = newChild)
+  }
 }
 
 object IsFinite {

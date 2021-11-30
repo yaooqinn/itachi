@@ -90,6 +90,10 @@ case class TryExpression(child: Expression) extends UnaryExpression {
         |}
         |""".stripMargin)
   }
+
+  override protected def withNewChildInternal(newChild: Expression): Expression = {
+    copy(child = newChild)
+  }
 }
 
 object TryExpression {

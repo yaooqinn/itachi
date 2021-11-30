@@ -108,6 +108,10 @@ case class CosineSimilarity(
   override def dataType: DataType = DoubleType
 
   override def prettyName: String = "cosine_similarity"
+
+  override protected def withNewChildrenInternal(
+      newLeft: Expression, newRight: Expression): Expression =
+    copy(left = newLeft, right = newRight)
 }
 
 object CosineSimilarity {

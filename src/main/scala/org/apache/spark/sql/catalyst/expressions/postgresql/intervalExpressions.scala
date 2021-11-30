@@ -68,7 +68,11 @@ abstract class IntervalJustifyLike(
   """,
   since = "0.1.0")
 case class JustifyDays(child: Expression)
-  extends IntervalJustifyLike(child, justifyDays, "justifyDays")
+  extends IntervalJustifyLike(child, justifyDays, "justifyDays") {
+  override protected def withNewChildInternal(newChild: Expression): Expression = {
+    copy(child = newChild)
+  }
+}
 
 @ExpressionDescription(
   usage = "_FUNC_(expr) - Adjust interval so 24-hour time periods are represented as days",
@@ -79,7 +83,11 @@ case class JustifyDays(child: Expression)
   """,
   since = "0.1.0")
 case class JustifyHours(child: Expression)
-  extends IntervalJustifyLike(child, justifyHours, "justifyHours")
+  extends IntervalJustifyLike(child, justifyHours, "justifyHours") {
+  override protected def withNewChildInternal(newChild: Expression): Expression = {
+    copy(child = newChild)
+  }
+}
 
 @ExpressionDescription(
   usage = "_FUNC_(expr) - Adjust interval using justifyHours and justifyDays, with additional" +
@@ -91,7 +99,11 @@ case class JustifyHours(child: Expression)
   """,
   since = "0.1.0")
 case class JustifyInterval(child: Expression)
-  extends IntervalJustifyLike(child, justifyInterval, "justifyInterval")
+  extends IntervalJustifyLike(child, justifyInterval, "justifyInterval") {
+  override protected def withNewChildInternal(newChild: Expression): Expression = {
+    copy(child = newChild)
+  }
+}
 
 
 object IntervalJustifyLike {

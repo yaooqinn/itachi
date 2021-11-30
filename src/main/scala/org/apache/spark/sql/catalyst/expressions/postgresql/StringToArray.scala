@@ -44,8 +44,6 @@ case class StringToArray(text: Expression, delimiter: Expression, replaced: Expr
 
   override def prettyName: String = "string_to_array"
 
-  override def children: Seq[Expression] = Seq(text, delimiter, replaced)
-
   override def inputTypes: Seq[AbstractDataType] = Seq(StringType, StringType, StringType)
 
   override def dataType: DataType = ArrayType(StringType, containsNull = true)
@@ -75,6 +73,17 @@ case class StringToArray(text: Expression, delimiter: Expression, replaced: Expr
     }
     val inited = if (UTF8String.EMPTY_UTF8.equals(deli)) strings.init else strings
     new GenericArrayData(inited.asInstanceOf[Array[Any]])
+  }
+
+  override def first: Expression = text
+
+  override def second: Expression = delimiter
+
+  override def third: Expression = replaced
+
+  override protected def withNewChildrenInternal(
+      newFirst: Expression, newSecond: Expression, newThird: Expression): Expression = {
+    copy(text = newFirst, delimiter = newSecond, replaced = newThird)
   }
 }
 
