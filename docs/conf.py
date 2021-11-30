@@ -151,7 +151,7 @@ html_theme_options = {
     # Currently, the supported themes are:
     # - Bootstrap 2: https://bootswatch.com/2
     # - Bootstrap 3: https://bootswatch.com/3
-    'bootswatch_theme': "Superhero",
+    'bootswatch_theme': "Slate",
 
     # Choose Bootstrap version.
     # Values: "3" (default) or "2" (in quotes)
@@ -178,4 +178,6 @@ def setup(app):
         'enable_eval_rst': True,
     }, True)
     app.add_stylesheet("https://bootswatch.com/3/superhero/bootstrap.min.css")
+    app.add_stylesheet("https://bootswatch.com/3/darkly/bootstrap.min.css")
+    app.add_stylesheet("https://bootswatch.com/3/slate/bootstrap.min.css")
     app.add_transform(AutoStructify)
