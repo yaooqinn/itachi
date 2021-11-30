@@ -266,6 +266,69 @@ org.apache.spark.sql.catalyst.expressions.postgresql.SplitPart
 
 - **Since**
 0.1.0
+## stage_attempt_num
+- **Usage**
+```scala
+stage_attempt_num() - Get stage attemptNumber, How many times the stage that this task belongs to has been attempted.
+```
+- **Arguments**
+```scala
+
+```
+- **Examples**
+```sql
+
+```
+- **Class**
+```scala
+org.apache.spark.sql.catalyst.expressions.debug.StageAttemptNumber
+```
+- **Note**
+
+- **Since**
+0.3.0
+## stage_id
+- **Usage**
+```scala
+stage_id() - Get the stage id which the current task belong to
+```
+- **Arguments**
+```scala
+
+```
+- **Examples**
+```sql
+
+```
+- **Class**
+```scala
+org.apache.spark.sql.catalyst.expressions.debug.StageId
+```
+- **Note**
+
+- **Since**
+0.3.0
+## stage_id_with_retry
+- **Usage**
+```scala
+stage_id_with_retry(stageId) - Get task attemptNumber, and will throw FetchFailedException in the `stageId` Stage and make it retry.
+```
+- **Arguments**
+```scala
+
+```
+- **Examples**
+```sql
+
+```
+- **Class**
+```scala
+org.apache.spark.sql.catalyst.expressions.debug.StageIdWithRetry
+```
+- **Note**
+
+- **Since**
+3.3.0
 ## string_to_array
 - **Usage**
 ```scala
@@ -291,6 +354,69 @@ org.apache.spark.sql.catalyst.expressions.postgresql.StringToArray
 
 - **Since**
 0.1.0
+## task_attempt_id
+- **Usage**
+```scala
+task_attempt_id() - Get an ID that is unique to this task attempt within SparkContext
+```
+- **Arguments**
+```scala
+
+```
+- **Examples**
+```sql
+
+```
+- **Class**
+```scala
+org.apache.spark.sql.catalyst.expressions.debug.TaskAttemptId
+```
+- **Note**
+
+- **Since**
+0.3.0
+## task_attempt_num
+- **Usage**
+```scala
+task_attempt_num() - Get task attemptNumber, how many times this task has been attempted
+```
+- **Arguments**
+```scala
+
+```
+- **Examples**
+```sql
+
+```
+- **Class**
+```scala
+org.apache.spark.sql.catalyst.expressions.debug.TaskAttemptNumber
+```
+- **Note**
+
+- **Since**
+0.3.0
+## task_metrics_result_size
+- **Usage**
+```scala
+task_metrics_result_size() - Meaningless
+```
+- **Arguments**
+```scala
+
+```
+- **Examples**
+```sql
+
+```
+- **Class**
+```scala
+org.apache.spark.sql.catalyst.expressions.debug.TaskMetricsResultSize
+```
+- **Note**
+
+- **Since**
+0.3.0
 ## unnest
 - **Usage**
 ```scala

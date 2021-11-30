@@ -17,7 +17,7 @@
 
 name := "itachi"
 
-version := "0.2.0"
+version := "0.3.0"
 
 scalaVersion := "2.12.10"
 

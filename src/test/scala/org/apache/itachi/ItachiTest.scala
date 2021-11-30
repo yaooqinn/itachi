@@ -54,4 +54,26 @@ class ItachiTest extends SparkSessionHelper {
     checkAnswer(frame, Seq(Row(1.0)))
   }
 
+  test("task_attempt_num") {
+    checkAnswer(sql("SELECT task_attempt_num()"), Seq(Row(0)))
+  }
+
+  test("task_attempt_id") {
+    checkAnswer(
+      sql("SELECT task_attempt_id()"),
+      sql("SELECT task_attempt_id()").collect().map(x => Row(x.getLong(0) + 1)))
+  }
+
+  test("stage_id") {
+    checkAnswer(sql("SELECT stage_id()"),
+      sql("SELECT stage_id()").collect().map(x => Row(x.getInt(0) + 1)))
+  }
+
+  test("stage_attempt_num") {
+    checkAnswer(sql("SELECT stage_attempt_num()"), Seq(Row(0)))
+  }
+
+  test("task_metrics_result_size") {
+    checkAnswer(sql("SELECT task_metrics_result_size()"), Seq(Row(0L)))
+  }
 }

@@ -17,12 +17,7 @@
 
 package org.apache.spark.sql.extra
 
-import java.nio.charset.StandardCharsets
-import java.nio.file.{Files, Paths, StandardOpenOption}
-
 import org.apache.spark.sql.{DataFrame, Row}
-import org.apache.spark.sql.catalyst.analysis.FunctionRegistry
-import org.apache.spark.sql.catalyst.expressions.ExpressionInfo
 import org.apache.spark.sql.types.Decimal
 import org.apache.spark.unsafe.types.CalendarInterval
 
