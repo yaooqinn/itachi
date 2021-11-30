@@ -100,8 +100,8 @@ html_theme_options = {
     # an arbitrary url.
     'navbar_links': [
         ("Examples", "index.html#simple-example", True),
-        ("Postgres SQL", "/functions/postgres"),
-        ("Presto", "/functions/presto"),
+        ("Postgres SQL", "functions/postgres"),
+        ("Presto", "functions/presto"),
         ("Github", "https://github.com/yaooqinn/itachi", True),
         ("Apache Kyuubi", "https://kyuubi.apache.org/", True),
     ],
