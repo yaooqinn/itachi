@@ -177,6 +177,5 @@ def setup(app):
         'auto_toc_tree_section': 'Contents',
         'enable_eval_rst': True,
     }, True)
-    app.add_stylesheet("bootstrap-sphinx.css")
-    app.add_stylesheet("css/bootstrap.min.css")
+    app.add_stylesheet("https://bootswatch.com/3/superhero/bootstrap.min.css")
     app.add_transform(AutoStructify)
