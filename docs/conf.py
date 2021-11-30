@@ -17,9 +17,6 @@ import shlex
 
 sys.path.insert(0, os.path.abspath('.'))
 
-import sphinx_rtd_theme
-html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
-
 import sphinx_markdown_tables
 import recommonmark
 from recommonmark.transform import AutoStructify
@@ -54,7 +51,7 @@ limitations under the License.
 author = 'Kent Yao'
 
 # The full version, including alpha/beta/rc tags
-release = '0.1.0'
+release = '0.3.0'
 
 
 # -- General configuration ---------------------------------------------------
